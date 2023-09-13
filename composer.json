@@ -1,0 +1,26 @@
+{
+    "name": "karelwintersky/arris.delight-php-auth",
+    "description": "Arris µFramework - Auth library based on Delight-im PHP Auth",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Karel Wintersky",
+            "email": "karel.wintersky@google.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "ext-pdo": "*",
+        "ext-openssl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arris\\DelightAuth\\Auth": "src/",
+            "Arris\\DelightAuth\\Base64": "src.base64/",
+            "Arris\\DelightAuth\\Http\\": "src.http",
+            "Arris\\DelightAuth\\Db\\": "src.db",
+            "Arris\\DelightAuth\\Cookie\\": "src.cookie"
+        }
+    }
+}
