@@ -16,8 +16,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Arris\\DelightAuth\\Auth": "src/",
-            "Arris\\DelightAuth\\Base64": "src.base64/",
+            "Arris\\DelightAuth\\Auth\\": "src/",
+            "Arris\\DelightAuth\\Base64\\": "src.base64/",
             "Arris\\DelightAuth\\Http\\": "src.http",
             "Arris\\DelightAuth\\Db\\": "src.db",
             "Arris\\DelightAuth\\Cookie\\": "src.cookie"
