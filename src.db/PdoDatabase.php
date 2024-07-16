@@ -83,7 +83,7 @@ final class PdoDatabase implements Database
      */
     public static function fromPdo(PDO $pdoInstance, $preserveOldState = null)
     {
-        return new static($pdoInstance, null, $preserveOldState);
+        return new PdoDatabase($pdoInstance, null, $preserveOldState);
     }
 
     /**
@@ -96,7 +96,7 @@ final class PdoDatabase implements Database
      */
     public static function fromDsn(PdoDsn $pdoDsn)
     {
-        return new static(null, $pdoDsn);
+        return new PdoDatabase(null, $pdoDsn);
     }
 
     /**
@@ -109,7 +109,7 @@ final class PdoDatabase implements Database
      */
     public static function fromDataSource(PdoDataSource $pdoDataSource)
     {
-        return new static(null, $pdoDataSource->toDsn());
+        return new PdoDatabase(null, $pdoDataSource->toDsn());
     }
 
     public function select($query, array $bindValues = null)

@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^8.2",
         "ext-pdo": "*",
         "ext-openssl": "*"
     },
@@ -22,5 +22,8 @@
             "Arris\\DelightAuth\\Db\\": "src.db",
             "Arris\\DelightAuth\\Cookie\\": "src.cookie"
         }
+    },
+    "require-dev": {
+        "rector/rector": "^1.2.1"
     }
 }

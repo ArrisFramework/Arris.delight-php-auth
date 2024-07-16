@@ -7,10 +7,10 @@ final class SimpleProfiler implements Profiler
 {
 
     /** The maximum number of entries in traces to use as the default */
-    const TRACE_MAX_LENGTH_DEFAULT = 10;
+    public const TRACE_MAX_LENGTH_DEFAULT = 10;
 
     /** @var Measurement[] the measurements recorded by this instance */
-    private $measurements;
+    private $measurements = [];
     /** @var int the maximum number of entries in traces */
     private $maxTraceLength;
     /** @var float|null the start time of the current measurement in milliseconds */
@@ -18,8 +18,6 @@ final class SimpleProfiler implements Profiler
 
     public function __construct($maxTraceLength = null)
     {
-        $this->measurements = [];
-
         if ($maxTraceLength === null) {
             $this->maxTraceLength = self::TRACE_MAX_LENGTH_DEFAULT;
         } else {
@@ -62,7 +60,7 @@ final class SimpleProfiler implements Profiler
         );
     }
 
-    public function getCount()
+    public function getCount(): int
     {
         return count($this->measurements);
     }

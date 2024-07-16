@@ -20,14 +20,14 @@ final class Base64
      *
      * @var string
      */
-    const LAST_THREE_STANDARD = '+/=';
+    public const LAST_THREE_STANDARD = '+/=';
 
     /**
      * The last three characters from the alphabet of the URL-safe implementation
      *
      * @var string
      */
-    const LAST_THREE_URL_SAFE = '-_~';
+    public const LAST_THREE_URL_SAFE = '-_~';
 
     /**
      * Encodes the supplied data to a URL-safe variant of Base64
@@ -36,7 +36,7 @@ final class Base64
      * @return string
      * @throws EncodingError if the input has been invalid
      */
-    public static function encodeUrlSafe($data)
+    public static function encodeUrlSafe(mixed $data): string
     {
         $encoded = self::encode($data);
 
@@ -54,7 +54,7 @@ final class Base64
      * @return string
      * @throws EncodingError if the input has been invalid
      */
-    public static function encode($data)
+    public static function encode(mixed $data): string
     {
         $encoded = \base64_encode($data);
 
@@ -72,7 +72,7 @@ final class Base64
      * @return string
      * @throws EncodingError if the input has been invalid
      */
-    public static function encodeUrlSafeWithoutPadding($data)
+    public static function encodeUrlSafeWithoutPadding(mixed $data): string
     {
         $encoded = self::encode($data);
 
@@ -95,7 +95,7 @@ final class Base64
      * @return mixed
      * @throws DecodingError if the input has been invalid
      */
-    public static function decodeUrlSafeWithoutPadding($data)
+    public static function decodeUrlSafeWithoutPadding(string $data): mixed
     {
         return self::decodeUrlSafe($data);
     }
@@ -107,7 +107,7 @@ final class Base64
      * @return mixed
      * @throws DecodingError if the input has been invalid
      */
-    public static function decodeUrlSafe($data)
+    public static function decodeUrlSafe(string $data): mixed
     {
         $data = \strtr(
             $data,
@@ -125,7 +125,7 @@ final class Base64
      * @return mixed
      * @throws DecodingError if the input has been invalid
      */
-    public static function decode($data)
+    public static function decode(string $data): mixed
     {
         $decoded = \base64_decode($data, true);
 

@@ -138,16 +138,16 @@ try {
 
     echo 'We have signed up a new user with the ID ' . $userId;
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Invalid email address');
 }
-catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException $e) {
     die('Invalid password');
 }
-catch (\Arris\DelightAuth\Auth\UserAlreadyExistsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UserAlreadyExistsException $e) {
     die('User already exists');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -186,16 +186,16 @@ try {
 
     echo 'User is logged in';
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Wrong email address');
 }
-catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException $e) {
     die('Wrong password');
 }
-catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\EmailNotVerifiedException $e) {
     die('Email not verified');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -212,16 +212,16 @@ try {
 
     echo 'Email address has been verified';
 }
-catch (\Arris\DelightAuth\Auth\InvalidSelectorTokenPairException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidSelectorTokenPairException $e) {
     die('Invalid token');
 }
-catch (\Arris\DelightAuth\Auth\TokenExpiredException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TokenExpiredException $e) {
     die('Token expired');
 }
-catch (\Arris\DelightAuth\Auth\UserAlreadyExistsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UserAlreadyExistsException $e) {
     die('Email address already exists');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -267,16 +267,16 @@ try {
 
     echo 'Request has been generated';
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Invalid email address');
 }
-catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\EmailNotVerifiedException $e) {
     die('Email not verified');
 }
-catch (\Arris\DelightAuth\Auth\ResetDisabledException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\ResetDisabledException $e) {
     die('Password reset is disabled');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -306,16 +306,16 @@ try {
 
     echo 'Ask the user for their new password';
 }
-catch (\Arris\DelightAuth\Auth\InvalidSelectorTokenPairException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidSelectorTokenPairException $e) {
     die('Invalid token');
 }
-catch (\Arris\DelightAuth\Auth\TokenExpiredException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TokenExpiredException $e) {
     die('Token expired');
 }
-catch (\Arris\DelightAuth\Auth\ResetDisabledException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\ResetDisabledException $e) {
     die('Password reset is disabled');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -341,19 +341,19 @@ try {
 
     echo 'Password has been reset';
 }
-catch (\Arris\DelightAuth\Auth\InvalidSelectorTokenPairException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidSelectorTokenPairException $e) {
     die('Invalid token');
 }
-catch (\Arris\DelightAuth\Auth\TokenExpiredException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TokenExpiredException $e) {
     die('Token expired');
 }
-catch (\Arris\DelightAuth\Auth\ResetDisabledException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\ResetDisabledException $e) {
     die('Password reset is disabled');
 }
-catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException $e) {
     die('Invalid password');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -372,13 +372,13 @@ try {
 
     echo 'Password has been changed';
 }
-catch (\Arris\DelightAuth\Auth\NotLoggedInException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\NotLoggedInException $e) {
     die('Not logged in');
 }
-catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException $e) {
     die('Invalid password(s)');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -406,19 +406,19 @@ try {
         echo 'We can\'t say if the user is who they claim to be';
     }
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Invalid email address');
 }
-catch (\Arris\DelightAuth\Auth\UserAlreadyExistsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UserAlreadyExistsException $e) {
     die('Email address already exists');
 }
-catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\EmailNotVerifiedException $e) {
     die('Account not verified');
 }
-catch (\Arris\DelightAuth\Auth\NotLoggedInException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\NotLoggedInException $e) {
     die('Not logged in');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -449,10 +449,10 @@ try {
 
     echo 'The user may now respond to the confirmation request (usually by clicking a link)';
 }
-catch (\Arris\DelightAuth\Auth\ConfirmationRequestNotFound $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\ConfirmationRequestNotFound $e) {
     die('No earlier request found that could be re-sent');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('There have been too many requests -- try again later');
 }
 ```
@@ -467,10 +467,10 @@ try {
 
     echo 'The user may now respond to the confirmation request (usually by clicking a link)';
 }
-catch (\Arris\DelightAuth\Auth\ConfirmationRequestNotFound $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\ConfirmationRequestNotFound $e) {
     die('No earlier request found that could be re-sent');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('There have been too many requests -- try again later');
 }
 ```
@@ -504,7 +504,7 @@ catch (\Delight\Auth\NotLoggedInException $e) {
 try {
     $auth->logOutEverywhere();
 }
-catch (\Arris\DelightAuth\Auth\NotLoggedInException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\NotLoggedInException $e) {
     die('Not logged in');
 }
 ```
@@ -647,10 +647,10 @@ try {
         echo 'We can\'t say if the user is who they claim to be';
     }
 }
-catch (\Arris\DelightAuth\Auth\NotLoggedInException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\NotLoggedInException $e) {
     die('The user is not signed in');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -819,10 +819,10 @@ try {
         echo 'We can\'t say if the user is who they claim to be';
     }
 }
-catch (\Arris\DelightAuth\Auth\NotLoggedInException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\NotLoggedInException $e) {
     die('The user is not signed in');
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     die('Too many requests');
 }
 ```
@@ -848,7 +848,7 @@ try {
 
     echo 'Do something with the resource or feature';
 }
-catch (\Arris\DelightAuth\Auth\TooManyRequestsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\TooManyRequestsException $e) {
     // operation cancelled
 
     \http_response_code(429);
@@ -884,13 +884,13 @@ try {
 
     echo 'We have signed up a new user with the ID ' . $userId;
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Invalid email address');
 }
-catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException $e) {
     die('Invalid password');
 }
-catch (\Arris\DelightAuth\Auth\UserAlreadyExistsException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UserAlreadyExistsException $e) {
     die('User already exists');
 }
 ```
@@ -907,7 +907,7 @@ Deleting users by their ID:
 try {
     $auth->admin()->deleteUserById($_POST['id']);
 }
-catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownIdException $e) {
     die('Unknown ID');
 }
 ```
@@ -918,7 +918,7 @@ Deleting users by their email address:
 try {
     $auth->admin()->deleteUserByEmail($_POST['email']);
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Unknown email address');
 }
 ```
@@ -929,10 +929,10 @@ Deleting users by their username:
 try {
     $auth->admin()->deleteUserByUsername($_POST['username']);
 }
-catch (\Arris\DelightAuth\Auth\UnknownUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownUsernameException $e) {
     die('Unknown username');
 }
-catch (\Arris\DelightAuth\Auth\AmbiguousUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\AmbiguousUsernameException $e) {
     die('Ambiguous username');
 }
 ```
@@ -953,7 +953,7 @@ SELECT id, email, username, status, verified, roles_mask, registered, last_login
 try {
     $auth->admin()->addRoleForUserById($userId, \Delight\Auth\Role::ADMIN);
 }
-catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownIdException $e) {
     die('Unknown user ID');
 }
 
@@ -962,7 +962,7 @@ catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
 try {
     $auth->admin()->addRoleForUserByEmail($userEmail, \Delight\Auth\Role::ADMIN);
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Unknown email address');
 }
 
@@ -971,10 +971,10 @@ catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
 try {
     $auth->admin()->addRoleForUserByUsername($username, \Delight\Auth\Role::ADMIN);
 }
-catch (\Arris\DelightAuth\Auth\UnknownUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownUsernameException $e) {
     die('Unknown username');
 }
-catch (\Arris\DelightAuth\Auth\AmbiguousUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\AmbiguousUsernameException $e) {
     die('Ambiguous username');
 }
 ```
@@ -987,7 +987,7 @@ catch (\Arris\DelightAuth\Auth\AmbiguousUsernameException $e) {
 try {
     $auth->admin()->removeRoleForUserById($userId, \Delight\Auth\Role::ADMIN);
 }
-catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownIdException $e) {
     die('Unknown user ID');
 }
 
@@ -996,7 +996,7 @@ catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
 try {
     $auth->admin()->removeRoleForUserByEmail($userEmail, \Delight\Auth\Role::ADMIN);
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Unknown email address');
 }
 
@@ -1005,10 +1005,10 @@ catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
 try {
     $auth->admin()->removeRoleForUserByUsername($username, \Delight\Auth\Role::ADMIN);
 }
-catch (\Arris\DelightAuth\Auth\UnknownUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownUsernameException $e) {
     die('Unknown username');
 }
-catch (\Arris\DelightAuth\Auth\AmbiguousUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\AmbiguousUsernameException $e) {
     die('Ambiguous username');
 }
 ```
@@ -1026,7 +1026,7 @@ try {
         echo 'The specified user is not an administrator';
     }
 }
-catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownIdException $e) {
     die('Unknown user ID');
 }
 ```
@@ -1043,10 +1043,10 @@ $auth->admin()->getRolesForUserById($userId);
 try {
     $auth->admin()->logInAsUserById($_POST['id']);
 }
-catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownIdException $e) {
     die('Unknown ID');
 }
-catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\EmailNotVerifiedException $e) {
     die('Email address not verified');
 }
 
@@ -1055,10 +1055,10 @@ catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
 try {
     $auth->admin()->logInAsUserByEmail($_POST['email']);
 }
-catch (\Arris\DelightAuth\Auth\InvalidEmailException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidEmailException $e) {
     die('Unknown email address');
 }
-catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\EmailNotVerifiedException $e) {
     die('Email address not verified');
 }
 
@@ -1067,13 +1067,13 @@ catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
 try {
     $auth->admin()->logInAsUserByUsername($_POST['username']);
 }
-catch (\Arris\DelightAuth\Auth\UnknownUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownUsernameException $e) {
     die('Unknown username');
 }
-catch (\Arris\DelightAuth\Auth\AmbiguousUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\AmbiguousUsernameException $e) {
     die('Ambiguous username');
 }
-catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\EmailNotVerifiedException $e) {
     die('Email address not verified');
 }
 ```
@@ -1084,10 +1084,10 @@ catch (\Arris\DelightAuth\Auth\EmailNotVerifiedException $e) {
 try {
     $auth->admin()->changePasswordForUserById($_POST['id'], $_POST['newPassword']);
 }
-catch (\Arris\DelightAuth\Auth\UnknownIdException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownIdException $e) {
     die('Unknown ID');
 }
-catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException $e) {
     die('Invalid password');
 }
 
@@ -1096,13 +1096,13 @@ catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
 try {
     $auth->admin()->changePasswordForUserByUsername($_POST['username'], $_POST['newPassword']);
 }
-catch (\Arris\DelightAuth\Auth\UnknownUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\UnknownUsernameException $e) {
     die('Unknown username');
 }
-catch (\Arris\DelightAuth\Auth\AmbiguousUsernameException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\AmbiguousUsernameException $e) {
     die('Ambiguous username');
 }
-catch (\Arris\DelightAuth\Auth\InvalidPasswordException $e) {
+catch (\Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException $e) {
     die('Invalid password');
 }
 ```

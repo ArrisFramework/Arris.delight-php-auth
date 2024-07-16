@@ -1,6 +1,6 @@
 <?php
 
-namespace Arris\DelightAuth\Auth;
+namespace Arris\DelightAuth\Auth\Exceptions;
 
 class UnknownUsernameException extends AuthException
 {

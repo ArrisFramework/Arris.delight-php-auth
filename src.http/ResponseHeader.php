@@ -22,7 +22,7 @@ final class ResponseHeader
      * @param string $valuePrefix the optional string to match at the beginning of the header's value
      * @return string|null the header (if found) or `null`
      */
-    public static function get($name, $valuePrefix = '')
+    public static function get(string $name, string $valuePrefix = ''): ?string
     {
         if (empty($name)) {
             return null;
@@ -35,7 +35,7 @@ final class ResponseHeader
             if (\strcasecmp(\substr($header, 0, $nameLength + 1), ($name . ':')) === 0) {
                 $headerValue = \trim(\substr($header, $nameLength + 1), "\t ");
 
-                if (empty($valuePrefix) || \substr($headerValue, 0, \strlen($valuePrefix)) === $valuePrefix) {
+                if (empty($valuePrefix) || str_starts_with($headerValue, $valuePrefix)) {
                     return $header;
                 }
             }
@@ -51,9 +51,9 @@ final class ResponseHeader
      * @param string $valuePrefix the optional string to match at the beginning of the header's value
      * @return string|null the value of the header (if found) or `null`
      */
-    public static function getValue($name, $valuePrefix = '')
+    public static function getValue(string $name, string $valuePrefix = ''): ?string
     {
-        $header = static::get($name, $valuePrefix);
+        $header = ResponseHeader::get($name, $valuePrefix);
 
         if (!empty($header)) {
             $nameLength = \strlen($name);
@@ -74,7 +74,7 @@ final class ResponseHeader
      * @param string $name the name of the header
      * @param string $value the corresponding value for the header
      */
-    public static function set($name, $value)
+    public static function set(string $name, string $value): void
     {
         \header($name . ': ' . $value, true);
     }
@@ -87,7 +87,7 @@ final class ResponseHeader
      * @param string $name the name of the header
      * @param string $value the corresponding value for the header
      */
-    public static function add($name, $value)
+    public static function add(string $name, string $value): void
     {
         \header($name . ': ' . $value, false);
     }
@@ -99,9 +99,9 @@ final class ResponseHeader
      * @param string $valuePrefix the optional string to match at the beginning of the header's value
      * @return bool whether a header, as specified, has been found and removed
      */
-    public static function remove($name, $valuePrefix = '')
+    public static function remove(string $name, string $valuePrefix = ''): bool
     {
-        return static::take($name, $valuePrefix) !== null;
+        return ResponseHeader::take($name, $valuePrefix) !== null;
     }
 
     /**
@@ -111,7 +111,7 @@ final class ResponseHeader
      * @param string $valuePrefix the optional string to match at the beginning of the header's value
      * @return string|null the header (if found) or `null`
      */
-    public static function take($name, $valuePrefix = '')
+    public static function take(string $name, string $valuePrefix = ''): ?string
     {
         if (empty($name)) {
             return null;
@@ -127,7 +127,7 @@ final class ResponseHeader
             if (\strcasecmp(\substr($header, 0, $nameLength + 1), ($name . ':')) === 0) {
                 $headerValue = \trim(\substr($header, $nameLength + 1), "\t ");
 
-                if ((empty($valuePrefix) || \substr($headerValue, 0, \strlen($valuePrefix)) === $valuePrefix) && $first === null) {
+                if ((empty($valuePrefix) || str_starts_with($headerValue, $valuePrefix)) && $first === null) {
                     $first = $header;
                 } else {
                     $homonyms[] = $header;
@@ -153,9 +153,9 @@ final class ResponseHeader
      * @param string $valuePrefix the optional string to match at the beginning of the header's value
      * @return string|null the value of the header (if found) or `null`
      */
-    public static function takeValue($name, $valuePrefix = '')
+    public static function takeValue(string $name, string $valuePrefix = ''): ?string
     {
-        $header = static::take($name, $valuePrefix);
+        $header = ResponseHeader::take($name, $valuePrefix);
 
         if (!empty($header)) {
             $nameLength = \strlen($name);

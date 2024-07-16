@@ -5,28 +5,28 @@ namespace Arris\DelightAuth\Auth;
 final class Role
 {
 
-    const ADMIN = 1;
-    const AUTHOR = 2;
-    const COLLABORATOR = 4;
-    const CONSULTANT = 8;
-    const CONSUMER = 16;
-    const CONTRIBUTOR = 32;
-    const COORDINATOR = 64;
-    const CREATOR = 128;
-    const DEVELOPER = 256;
-    const DIRECTOR = 512;
-    const EDITOR = 1024;
-    const EMPLOYEE = 2048;
-    const MAINTAINER = 4096;
-    const MANAGER = 8192;
-    const MODERATOR = 16384;
-    const PUBLISHER = 32768;
-    const REVIEWER = 65536;
-    const SUBSCRIBER = 131072;
-    const SUPER_ADMIN = 262144;
-    const SUPER_EDITOR = 524288;
-    const SUPER_MODERATOR = 1048576;
-    const TRANSLATOR = 2097152;
+    public const ADMIN = 1;
+    public const AUTHOR = 2;
+    public const COLLABORATOR = 4;
+    public const CONSULTANT = 8;
+    public const CONSUMER = 16;
+    public const CONTRIBUTOR = 32;
+    public const COORDINATOR = 64;
+    public const CREATOR = 128;
+    public const DEVELOPER = 256;
+    public const DIRECTOR = 512;
+    public const EDITOR = 1024;
+    public const EMPLOYEE = 2048;
+    public const MAINTAINER = 4096;
+    public const MANAGER = 8192;
+    public const MODERATOR = 16384;
+    public const PUBLISHER = 32768;
+    public const REVIEWER = 65536;
+    public const SUBSCRIBER = 131072;
+    public const SUPER_ADMIN = 262144;
+    public const SUPER_EDITOR = 524288;
+    public const SUPER_MODERATOR = 1048576;
+    public const TRANSLATOR = 2097152;
     // const XYZ = 4194304;
     // const XYZ = 8388608;
     // const XYZ = 16777216;
@@ -45,9 +45,9 @@ final class Role
      *
      * @return array
      */
-    public static function getMap()
+    public static function getMap(): array
     {
-        $reflectionClass = new \ReflectionClass(static::class);
+        $reflectionClass = new \ReflectionClass(self::class);
 
         return \array_flip($reflectionClass->getConstants());
     }
@@ -57,9 +57,9 @@ final class Role
      *
      * @return string[]
      */
-    public static function getNames()
+    public static function getNames(): array
     {
-        $reflectionClass = new \ReflectionClass(static::class);
+        $reflectionClass = new \ReflectionClass(self::class);
 
         return \array_keys($reflectionClass->getConstants());
     }
@@ -69,9 +69,9 @@ final class Role
      *
      * @return int[]
      */
-    public static function getValues()
+    public static function getValues(): array
     {
-        $reflectionClass = new \ReflectionClass(static::class);
+        $reflectionClass = new \ReflectionClass(self::class);
 
         return \array_values($reflectionClass->getConstants());
     }

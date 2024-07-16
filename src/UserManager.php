@@ -2,7 +2,18 @@
 
 namespace Arris\DelightAuth\Auth;
 
+use Arris\DelightAuth\Auth\Exceptions\AmbiguousUsernameException;
+use Arris\DelightAuth\Auth\Exceptions\AuthError;
+use Arris\DelightAuth\Auth\Exceptions\DatabaseError;
+use Arris\DelightAuth\Auth\Exceptions\DuplicateUsernameException;
+use Arris\DelightAuth\Auth\Exceptions\InvalidEmailException;
+use Arris\DelightAuth\Auth\Exceptions\InvalidPasswordException;
+use Arris\DelightAuth\Auth\Exceptions\MissingCallbackError;
+use Arris\DelightAuth\Auth\Exceptions\UnknownIdException;
+use Arris\DelightAuth\Auth\Exceptions\UnknownUsernameException;
+use Arris\DelightAuth\Auth\Exceptions\UserAlreadyExistsException;
 use Arris\DelightAuth\Base64\Base64;
+use Arris\DelightAuth\Base64\Throwable\EncodingError;
 use Arris\DelightAuth\Cookie\Session;
 use Arris\DelightAuth\Db\PdoDatabase;
 use Arris\DelightAuth\Db\PdoDsn;
@@ -16,39 +27,72 @@ use Arris\DelightAuth\Db\Throwable\IntegrityConstraintViolationException;
  */
 abstract class UserManager
 {
+    /**
+     * @var string session field for whether the client is currently signed in
+     */
+    public const SESSION_FIELD_LOGGED_IN = 'auth_logged_in';
 
-    /** @var string session field for whether the client is currently signed in */
-    const SESSION_FIELD_LOGGED_IN = 'auth_logged_in';
-    /** @var string session field for the ID of the user who is currently signed in (if any) */
-    const SESSION_FIELD_USER_ID = 'auth_user_id';
-    /** @var string session field for the email address of the user who is currently signed in (if any) */
-    const SESSION_FIELD_EMAIL = 'auth_email';
-    /** @var string session field for the display name (if any) of the user who is currently signed in (if any) */
-    const SESSION_FIELD_USERNAME = 'auth_username';
-    /** @var string session field for the status of the user who is currently signed in (if any) as one of the constants from the {@see Status} class */
-    const SESSION_FIELD_STATUS = 'auth_status';
-    /** @var string session field for the roles of the user who is currently signed in (if any) as a bitmask using constants from the {@see Role} class */
-    const SESSION_FIELD_ROLES = 'auth_roles';
-    /** @var string session field for whether the user who is currently signed in (if any) has been remembered (instead of them having authenticated actively) */
-    const SESSION_FIELD_REMEMBERED = 'auth_remembered';
-    /** @var string session field for the UNIX timestamp in seconds of the session data's last resynchronization with its authoritative source in the database */
-    const SESSION_FIELD_LAST_RESYNC = 'auth_last_resync';
-    /** @var string session field for the counter that keeps track of forced logouts that need to be performed in the current session */
-    const SESSION_FIELD_FORCE_LOGOUT = 'auth_force_logout';
+    /**
+     * @var string session field for the ID of the user who is currently signed in (if any)
+     */
+    public const SESSION_FIELD_USER_ID = 'auth_user_id';
 
-    /** @var PdoDatabase the database connection to operate on */
-    protected $db;
-    /** @var string|null the schema name for all database tables used by this component */
-    protected $dbSchema;
-    /** @var string the prefix for the names of all database tables used by this component */
-    protected $dbTablePrefix;
+    /**
+     * @var string session field for the email address of the user who is currently signed in (if any)
+     */
+    public const SESSION_FIELD_EMAIL = 'auth_email';
+
+    /**
+     * @var string session field for the display name (if any) of the user who is currently signed in (if any)
+     */
+    public const SESSION_FIELD_USERNAME = 'auth_username';
+
+    /**
+     * @var string session field for the status of the user who is currently signed in (if any) as one of the constants from the {@see Status} class
+     */
+    public const SESSION_FIELD_STATUS = 'auth_status';
+
+    /**
+     * @var string session field for the roles of the user who is currently signed in (if any) as a bitmask using constants from the {@see Role} class
+     */
+    public const SESSION_FIELD_ROLES = 'auth_roles';
+
+    /**
+     * @var string session field for whether the user who is currently signed in (if any) has been remembered (instead of them having authenticated actively)
+     */
+    public const SESSION_FIELD_REMEMBERED = 'auth_remembered';
+
+    /**
+     * @var string session field for the UNIX timestamp in seconds of the session data's last resynchronization with its authoritative source in the database
+     */
+    public const SESSION_FIELD_LAST_RESYNC = 'auth_last_resync';
+
+    /**
+     * @var string session field for the counter that keeps track of forced logouts that need to be performed in the current session
+     */
+    public const SESSION_FIELD_FORCE_LOGOUT = 'auth_force_logout';
+
+    /**
+     * @var PdoDatabase the database connection to operate on
+     */
+    protected ?PdoDatabase $db;
+
+    /**
+     * @var string|null the schema name for all database tables used by this component
+     */
+    protected ?string $dbSchema;
+
+    /**
+     * @var string the prefix for the names of all database tables used by this component
+     */
+    protected string $dbTablePrefix;
 
     /**
      * @param PdoDatabase|PdoDsn|\PDO $databaseConnection the database connection to operate on
      * @param string|null $dbTablePrefix (optional) the prefix for the names of all database tables used by this component
      * @param string|null $dbSchema (optional) the schema name for all database tables used by this component
      */
-    protected function __construct($databaseConnection, $dbTablePrefix = null, $dbSchema = null)
+    protected function __construct(mixed $databaseConnection, string $dbTablePrefix = null, string $dbSchema = null)
     {
         if ($databaseConnection instanceof PdoDatabase) {
             $this->db = $databaseConnection;
@@ -96,7 +140,7 @@ abstract class UserManager
      * @see confirmEmail
      * @see confirmEmailAndSignIn
      */
-    protected function createUserInternal($requireUniqueUsername, $email, $password, $username = null, callable $callback = null)
+    protected function createUserInternal(bool $requireUniqueUsername, string $email, string $password, string $username = null, callable $callback = null): int
     {
         \ignore_user_abort(true);
 
@@ -166,7 +210,7 @@ abstract class UserManager
      * @return string the sanitized email address
      * @throws InvalidEmailException if the email address has been invalid
      */
-    protected static function validateEmailAddress($email)
+    protected static function validateEmailAddress(string $email): string
     {
         if (empty($email)) {
             throw new InvalidEmailException();
@@ -188,7 +232,7 @@ abstract class UserManager
      * @return string the sanitized password
      * @throws InvalidPasswordException if the password has been invalid
      */
-    protected static function validatePassword($password)
+    protected static function validatePassword(string $password): string
     {
         if (empty($password)) {
             throw new InvalidPasswordException();
@@ -211,7 +255,7 @@ abstract class UserManager
      * @param string $name the name of the table
      * @return string the (qualified) full name of the table
      */
-    protected function makeTableName($name)
+    protected function makeTableName(string $name): string
     {
         $components = $this->makeTableNameComponents($name);
 
@@ -226,7 +270,7 @@ abstract class UserManager
      * @param string $name the name of the table
      * @return string[] the components of the (qualified) full name of the table
      */
-    protected function makeTableNameComponents($name)
+    protected function makeTableNameComponents(string $name): array
     {
         $components = [];
 
@@ -261,7 +305,7 @@ abstract class UserManager
      * @param callable $callback the function that sends the confirmation email to the user
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function createConfirmationRequest($userId, $email, callable $callback)
+    protected function createConfirmationRequest(int $userId, string $email, callable $callback): void
     {
         $selector = self::createRandomString(16);
         $token = self::createRandomString(16);
@@ -297,8 +341,9 @@ abstract class UserManager
      *
      * @param int $maxLength the maximum length of the output string (integer multiple of 4)
      * @return string the new random string
+     * @throws EncodingError
      */
-    public static function createRandomString($maxLength = 24)
+    public static function createRandomString(int $maxLength = 24): string
     {
         // calculate how many bytes of randomness we need for the specified string length
         $bytes = \floor((int)$maxLength / 4) * 3;
@@ -318,7 +363,7 @@ abstract class UserManager
      * @throws UnknownIdException if no user with the specified ID has been found
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function updatePasswordInternal($userId, $newPassword)
+    protected function updatePasswordInternal(int $userId, string $newPassword): void
     {
         $newPassword = \password_hash($newPassword, \PASSWORD_DEFAULT);
 
@@ -349,9 +394,8 @@ abstract class UserManager
      * @param int $roles the roles of the user as a bitmask using constants from the {@see Role} class
      * @param int $forceLogout the counter that keeps track of forced logouts that need to be performed in the current session
      * @param bool $remembered whether the user has been remembered (instead of them having authenticated actively)
-     * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function onLoginSuccessful($userId, $email, $username, $status, $roles, $forceLogout, $remembered)
+    protected function onLoginSuccessful(int $userId, string $email, string $username, int $status, int $roles, int $forceLogout, bool $remembered): void
     {
         // re-generate the session ID to prevent session fixation attacks (requests a cookie to be written on the client)
         Session::regenerate(true);
@@ -380,7 +424,7 @@ abstract class UserManager
      * @throws AmbiguousUsernameException if multiple users with the specified username have been found
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function getUserDataByUsername($username, array $requestedColumns)
+    protected function getUserDataByUsername(string $username, array $requestedColumns): array
     {
         try {
             $projection = \implode(', ', $requestedColumns);
@@ -410,7 +454,7 @@ abstract class UserManager
      * @param int $userId the ID of the user to sign out
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function forceLogoutForUserById($userId)
+    protected function forceLogoutForUserById(int $userId): void
     {
         $this->deleteRememberDirectiveForUserById($userId);
         $this->db->exec(
@@ -423,10 +467,10 @@ abstract class UserManager
      * Clears an existing directive that keeps the user logged in ("remember me")
      *
      * @param int $userId the ID of the user who shouldn't be kept signed in anymore
-     * @param string $selector (optional) the selector which the deletion should be restricted to
+     * @param string|null $selector (optional) the selector which the deletion should be restricted to
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function deleteRememberDirectiveForUserById($userId, $selector = null)
+    protected function deleteRememberDirectiveForUserById(int $userId, string $selector = null)
     {
         $whereMappings = [];
 

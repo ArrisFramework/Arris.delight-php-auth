@@ -7,40 +7,40 @@ final class PdoDataSource implements DataSource
 {
 
     /** The driver name for MySQL */
-    const DRIVER_NAME_MYSQL = 'mysql';
+    public const DRIVER_NAME_MYSQL = 'mysql';
     /** The driver name for PostgreSQL */
-    const DRIVER_NAME_POSTGRESQL = 'pgsql';
+    public const DRIVER_NAME_POSTGRESQL = 'pgsql';
     /** The driver name for SQLite */
-    const DRIVER_NAME_SQLITE = 'sqlite';
+    public const DRIVER_NAME_SQLITE = 'sqlite';
     /** The driver name for Oracle */
-    const DRIVER_NAME_ORACLE = 'oci';
+    public const DRIVER_NAME_ORACLE = 'oci';
     /** Hostname for the virtual loopback interface */
-    const HOST_LOOPBACK_NAME = 'localhost';
+    public const HOST_LOOPBACK_NAME = 'localhost';
     /** IPv4 address for the virtual loopback interface */
-    const HOST_LOOPBACK_IP = '127.0.0.1';
+    public const HOST_LOOPBACK_IP = '127.0.0.1';
     /** The default hostname */
-    const HOST_DEFAULT = self::HOST_LOOPBACK_NAME;
+    public const HOST_DEFAULT = self::HOST_LOOPBACK_NAME;
 
     /** @var string the name of the driver, e.g. `mysql` or `pgsql` */
     private $driverName;
     /** @var string|null the hostname where the database can be accessed, e.g. `db.example.com` */
-    private $hostname;
+    private $hostname = self::HOST_DEFAULT;
     /** @var int|null the port number to use at the given host, e.g. `3306` or `5432` */
     private $port;
     /** @var string|null the UNIX socket to use, e.g. `/tmp/db.sock` */
-    private $unixSocket;
+    private $unixSocket = null;
     /** @var bool|null whether to keep the database in memory only */
-    private $memory;
+    private $memory = null;
     /** @var string|null the path to the file where the database can be accessed on disk, e.g. `/opt/databases/mydb.ext` */
-    private $filePath;
+    private $filePath = null;
     /** @var string|null the name of the database, e.g. `my_application` */
-    private $databaseName;
+    private $databaseName = null;
     /** @var string|null the character encoding of the database, e.g. `utf8` */
     private $charset;
     /** @var string|null the name of a user that can access the database */
-    private $username;
+    private $username = null;
     /** @var string|null the password corresponding to the username */
-    private $password;
+    private $password = null;
 
     /**
      * Constructor
@@ -50,15 +50,8 @@ final class PdoDataSource implements DataSource
     public function __construct($driverName)
     {
         $this->driverName = (string)$driverName;
-        $this->hostname = self::HOST_DEFAULT;
         $this->port = self::suggestPortFromDriverName($driverName);
-        $this->unixSocket = null;
-        $this->memory = null;
-        $this->filePath = null;
-        $this->databaseName = null;
         $this->charset = self::suggestCharsetFromDriverName($driverName);
-        $this->username = null;
-        $this->password = null;
     }
 
     /**
