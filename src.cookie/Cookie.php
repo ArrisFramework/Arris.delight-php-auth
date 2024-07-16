@@ -484,11 +484,7 @@ final class Cookie
      */
     public static function get($name, $defaultValue = null)
     {
-        if (isset($_COOKIE[$name])) {
-            return $_COOKIE[$name];
-        } else {
-            return $defaultValue;
-        }
+        return $_COOKIE[$name] ?? $defaultValue;
     }
 
     private static function isNameValid($name)

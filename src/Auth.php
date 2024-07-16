@@ -455,7 +455,7 @@ final class Auth extends UserManager
     public function throttle(array $criteria, $supply, $interval, $burstiness = null, $simulated = null, $cost = null, $force = null)
     {
         // validate the supplied parameters and set appropriate defaults where necessary
-        $force = ($force !== null) ? (bool)$force : false;
+        $force = $force !== null && (bool)$force;
 
         if (!$this->throttling && !$force) {
             return $supply;
@@ -472,7 +472,7 @@ final class Auth extends UserManager
 
         // validate the supplied parameters and set appropriate defaults where necessary
         $burstiness = ($burstiness !== null) ? (int)$burstiness : 1;
-        $simulated = ($simulated !== null) ? (bool)$simulated : false;
+        $simulated = $simulated !== null && (bool)$simulated;
         $cost = ($cost !== null) ? (int)$cost : 1;
 
         $now = \time();

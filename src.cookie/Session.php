@@ -88,11 +88,7 @@ final class Session
      */
     public static function get($key, $defaultValue = null)
     {
-        if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        } else {
-            return $defaultValue;
-        }
+        return $_SESSION[$key] ?? $defaultValue;
     }
 
     /**
