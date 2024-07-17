@@ -20,10 +20,10 @@ interface Database
      * Instead, pass `?` characters (without any quotes) as placeholders and pass the actual values in the second argument
      *
      * @param string $query the SQL query to select with
-     * @param array|null $bindValues (optional) the values to bind as replacements for the `?` characters in the query
+     * @param array $bindValues (optional) the values to bind as replacements for the `?` characters in the query
      * @return array|null the rows and columns returned by the server or `null` if no results have been found
      */
-    public function select($query, array $bindValues = null);
+    public function select($query, array $bindValues = []);
 
     /**
      * Selects from the database using the specified query and returns the value of the first column in the first row
@@ -36,7 +36,7 @@ interface Database
      * @param array|null $bindValues (optional) the values to bind as replacements for the `?` characters in the query
      * @return mixed|null the value of the first column in the first row returned by the server or `null` if no results have been found
      */
-    public function selectValue($query, array $bindValues = null);
+    public function selectValue($query, array $bindValues = []);
 
     /**
      * Selects from the database using the specified query and returns the first row
@@ -49,7 +49,7 @@ interface Database
      * @param array|null $bindValues (optional) the values to bind as replacements for the `?` characters in the query
      * @return array|null the first row returned by the server or `null` if no results have been found
      */
-    public function selectRow($query, array $bindValues = null);
+    public function selectRow($query, array $bindValues = []);
 
     /**
      * Selects from the database using the specified query and returns the first column
@@ -62,7 +62,7 @@ interface Database
      * @param array|null $bindValues (optional) the values to bind as replacements for the `?` characters in the query
      * @return array|null the first column returned by the server or `null` if no results have been found
      */
-    public function selectColumn($query, array $bindValues = null);
+    public function selectColumn($query, array $bindValues = []);
 
     /**
      * Inserts the given mapping between columns and values into the specified table
@@ -109,7 +109,7 @@ interface Database
      * @throws IntegrityConstraintViolationException
      * @throws TransactionFailureException
      */
-    public function exec($statement, array $bindValues = null);
+    public function exec($statement, array $bindValues = []);
 
     /**
      * Returns the ID of the last row that has been inserted or returns the last value from the specified sequence

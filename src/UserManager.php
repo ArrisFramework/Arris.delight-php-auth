@@ -92,7 +92,7 @@ abstract class UserManager
      * @param string|null $dbTablePrefix (optional) the prefix for the names of all database tables used by this component
      * @param string|null $dbSchema (optional) the schema name for all database tables used by this component
      */
-    protected function __construct(mixed $databaseConnection, string $dbTablePrefix = null, string $dbSchema = null)
+    protected function __construct(mixed $databaseConnection, ?string $dbTablePrefix = null, ?string $dbSchema = null)
     {
         if ($databaseConnection instanceof PdoDatabase) {
             $this->db = $databaseConnection;
@@ -140,7 +140,7 @@ abstract class UserManager
      * @see confirmEmail
      * @see confirmEmailAndSignIn
      */
-    protected function createUserInternal(bool $requireUniqueUsername, string $email, string $password, string $username = null, callable $callback = null): int
+    protected function createUserInternal(bool $requireUniqueUsername, string $email, string $password, ?string $username = null, ?callable $callback = null): int
     {
         \ignore_user_abort(true);
 
@@ -470,7 +470,7 @@ abstract class UserManager
      * @param string|null $selector (optional) the selector which the deletion should be restricted to
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function deleteRememberDirectiveForUserById(int $userId, string $selector = null)
+    protected function deleteRememberDirectiveForUserById(int $userId, ?string $selector = null)
     {
         $whereMappings = [];
 

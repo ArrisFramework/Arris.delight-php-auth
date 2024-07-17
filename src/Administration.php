@@ -43,7 +43,7 @@ final class Administration extends UserManager
      * @throws AuthError if an internal problem occurred (do *not* catch)
      * @throws DuplicateUsernameException
      */
-    public function createUser(string $email, string $password, string $username = null): int
+    public function createUser(string $email, string $password, ?string $username = null): int
     {
         return $this->createUserInternal(false, $email, $password, $username, null);
     }
@@ -61,7 +61,7 @@ final class Administration extends UserManager
      * @throws DuplicateUsernameException if the specified username wasn't unique
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    public function createUserWithUniqueUsername(string $email, string $password, string $username = null): int
+    public function createUserWithUniqueUsername(string $email, string $password, ?string $username = null): int
     {
         return $this->createUserInternal(true, $email, $password, $username, null);
     }

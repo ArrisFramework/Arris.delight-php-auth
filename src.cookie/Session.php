@@ -44,7 +44,7 @@ final class Session
      * @param string|null $newId (optional) a new session ID to replace the current session ID
      * @return string the (old) session ID or an empty string
      */
-    public static function id($newId = null)
+    public static function id(?string $newId = null): string
     {
         if ($newId === null) {
             return \session_id();

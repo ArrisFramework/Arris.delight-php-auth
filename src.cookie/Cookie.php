@@ -175,10 +175,10 @@ final class Cookie
     /**
      * Sets the path for the cookie
      *
-     * @param string $path the path on the server that the cookie will be valid for (including all sub-directories), e.g. an empty string for the current directory or `/` for the root directory
+     * @param string|null $path the path on the server that the cookie will be valid for (including all sub-directories), e.g. an empty string for the current directory or `/` for the root directory
      * @return static this instance for chaining
      */
-    public function setPath(string $path): Cookie
+    public function setPath(?string $path = null): Cookie
     {
         $this->path = $path;
 
@@ -201,7 +201,7 @@ final class Cookie
      * @param string|null $domain the domain that the cookie will be valid for (including subdomains) or `null` for the current host (excluding subdomains)
      * @return static this instance for chaining
      */
-    public function setDomain(string $domain = null): Cookie
+    public function setDomain(?string $domain = null): Cookie
     {
         $this->domain = self::normalizeDomain($domain);
 
@@ -349,7 +349,7 @@ final class Cookie
      * @param string|null $sameSiteRestriction indicates that the cookie should not be sent along with cross-site requests (either `null`, `None`, `Lax` or `Strict`)
      * @return bool whether the cookie header has successfully been sent (and will *probably* cause the client to set the cookie)
      */
-    public static function setcookie(string $name, mixed $value = null, int $expiryTime = 0, string $path = null, string $domain = null, bool $secureOnly = false, bool $httpOnly = false, string $sameSiteRestriction = null): bool
+    public static function setcookie(string $name, mixed $value = null, int $expiryTime = 0, ?string $path = null, ?string $domain = null, bool $secureOnly = false, bool $httpOnly = false, ?string $sameSiteRestriction = null): bool
     {
         return self::addHttpHeader(
             self::buildCookieHeader($name, $value, $expiryTime, $path, $domain, $secureOnly, $httpOnly, $sameSiteRestriction)
@@ -369,7 +369,7 @@ final class Cookie
      * @param string|null $sameSiteRestriction indicates that the cookie should not be sent along with cross-site requests (either `null`, `None`, `Lax` or `Strict`)
      * @return string the HTTP header
      */
-    public static function buildCookieHeader(string $name, mixed $value = null, int $expiryTime = 0, string $path = null, string $domain = null, bool $secureOnly = false, bool $httpOnly = false, string $sameSiteRestriction = null): ?string
+    public static function buildCookieHeader(string $name, mixed $value = null, int $expiryTime = 0, ?string $path = null, ?string $domain = null, bool $secureOnly = false, bool $httpOnly = false, ?string $sameSiteRestriction = null): ?string
     {
         if (self::isNameValid($name)) {
             $name = (string)$name;

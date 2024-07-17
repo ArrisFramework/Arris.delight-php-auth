@@ -74,7 +74,7 @@ final class Auth extends UserManager
      * @param string|null $dbSchema (optional) the schema name for all database tables used by this component
      * @throws DatabaseError
      */
-    public function __construct($databaseConnection, $ipAddress = null, $dbTablePrefix = null, bool $throttling = null, int $sessionResyncInterval = null, string $dbSchema = null)
+    public function __construct($databaseConnection, $ipAddress = null, $dbTablePrefix = null, bool $throttling = true, $sessionResyncInterval = null, $dbSchema = null)
     {
         parent::__construct($databaseConnection, $dbTablePrefix, $dbSchema);
 
@@ -113,7 +113,7 @@ final class Auth extends UserManager
      * @return string
      * @throws EncodingError
      */
-    public static function createCookieName(string $descriptor, string $seed = null): string
+    public static function createCookieName(string $descriptor, ?string $seed = null): string
     {
         // use the supplied seed or the current UNIX time in seconds
         $seed ??= \time();
@@ -441,7 +441,7 @@ final class Auth extends UserManager
         }
     }
 
-    protected function deleteRememberDirectiveForUserById(int $userId, string $selector = null)
+    protected function deleteRememberDirectiveForUserById(int $userId, ?string $selector = null)
     {
         parent::deleteRememberDirectiveForUserById($userId, $selector);
 
@@ -497,7 +497,7 @@ final class Auth extends UserManager
      * @see confirmEmail
      * @see confirmEmailAndSignIn
      */
-    public function register(string $email, string $password, string $username = null, callable $callback = null): int
+    public function register(string $email, string $password, ?string $username = null, ?callable $callback = null): int
     {
         $this->throttle(['enumerateUsers', $this->getIpAddress()], 1, self::TIME_INTERVAL_HOUR, 75);
         $this->throttle(['createNewAccount', $this->getIpAddress()], 1, self::TIME_INTERVAL_DAY, 5, true);
@@ -523,7 +523,7 @@ final class Auth extends UserManager
      * @throws TooManyRequestsException if the actual demand has exceeded the designated supply
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    public function throttle(array $criteria, int $supply, int $interval, int $burstiness = null, bool $simulated = null, int $cost = null, bool $force = null)
+    public function throttle(array $criteria, int $supply, int $interval, ?int $burstiness = null, ?bool $simulated = null, ?int $cost = null, ?bool $force = null)
     {
         // validate the supplied parameters and set appropriate defaults where necessary
         $force = $force !== null && (bool)$force;
@@ -664,7 +664,7 @@ final class Auth extends UserManager
      * @see confirmEmail
      * @see confirmEmailAndSignIn
      */
-    public function registerWithUniqueUsername(string $email, string $password, string $username = null, callable $callback = null): int
+    public function registerWithUniqueUsername(string $email, string $password, ?string $username = null, ?callable $callback = null): int
     {
         $this->throttle(['enumerateUsers', $this->getIpAddress()], 1, self::TIME_INTERVAL_HOUR, 75);
         $this->throttle(['createNewAccount', $this->getIpAddress()], 1, self::TIME_INTERVAL_DAY, 5, true);
@@ -690,7 +690,7 @@ final class Auth extends UserManager
      * @throws TooManyRequestsException if the number of allowed attempts/requests has been exceeded
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    public function login(string $email, string $password, int $rememberDuration = null, callable $onBeforeSuccess = null)
+    public function login(string $email, string $password, ?int $rememberDuration = null, ?callable $onBeforeSuccess = null)
     {
         $this->throttle(['attemptToLogin', 'email', $email], 500, (60 * 60 * 24), null, true);
 
@@ -714,7 +714,7 @@ final class Auth extends UserManager
      * @throws TooManyRequestsException if the number of allowed attempts/requests has been exceeded
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    private function authenticateUserInternal(string $password, string $email = null, string $username = null, int $rememberDuration = null, callable $onBeforeSuccess = null)
+    private function authenticateUserInternal(string $password, ?string $email = null, ?string $username = null, ?int $rememberDuration = null, ?callable $onBeforeSuccess = null)
     {
         $this->throttle(['enumerateUsers', $this->getIpAddress()], 1, (60 * 60), 75);
         $this->throttle(['attemptToLogin', $this->getIpAddress()], 4, (60 * 60), 5, true);
@@ -876,7 +876,7 @@ final class Auth extends UserManager
      * @throws TooManyRequestsException if the number of allowed attempts/requests has been exceeded
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    public function loginWithUsername(string $username, string $password, int $rememberDuration = null, callable $onBeforeSuccess = null)
+    public function loginWithUsername(string $username, string $password, ?int $rememberDuration = null, ?callable $onBeforeSuccess = null)
     {
         $this->throttle(['attemptToLogin', 'username', $username], 500, (60 * 60 * 24), null, true);
 
@@ -957,7 +957,7 @@ final class Auth extends UserManager
      * @throws InvalidEmailException
      * @throws IntegrityConstraintViolationException
      */
-    public function confirmEmailAndSignIn(string $selector, string $token, int $rememberDuration = null): array
+    public function confirmEmailAndSignIn(string $selector, string $token, ?int $rememberDuration = null): array
     {
         $emailBeforeAndAfter = $this->confirmEmail($selector, $token);
 
