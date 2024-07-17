@@ -46,9 +46,9 @@ final class Auth extends UserManager
     public const COOKIE_CONTENT_SEPARATOR = '~';
 
     /**
-     * @var string the user's current IP address
+     * @var string|null the user's current IP address
      */
-    private string $ipAddress;
+    private ?string $ipAddress;
 
     /**
      * @var bool whether throttling should be enabled (e.g. in production) or disabled (e.g. during development)
@@ -97,7 +97,7 @@ final class Auth extends UserManager
      * @return string
      * @throws EncodingError
      */
-    public static function createRememberCookieName(string $sessionName = null): string
+    public static function createRememberCookieName(?string $sessionName = null): string
     {
         return self::createCookieName(
             'remember',
