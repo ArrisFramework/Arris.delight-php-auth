@@ -92,7 +92,7 @@ abstract class UserManager
      * @param string|null $dbTablePrefix (optional) the prefix for the names of all database tables used by this component
      * @param string|null $dbSchema (optional) the schema name for all database tables used by this component
      */
-    protected function __construct(mixed $databaseConnection, ?string $dbTablePrefix = null, ?string $dbSchema = null)
+    protected function __construct($databaseConnection, ?string $dbTablePrefix = null, ?string $dbSchema = null)
     {
         if ($databaseConnection instanceof PdoDatabase) {
             $this->db = $databaseConnection;

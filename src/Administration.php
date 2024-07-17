@@ -94,7 +94,7 @@ final class Administration extends UserManager
      * @return int the number of deleted users
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    private function deleteUsersByColumnValue(string $columnName, mixed $columnValue): int
+    private function deleteUsersByColumnValue(string $columnName, $columnValue): int
     {
         try {
             return $this->db->delete(
@@ -185,7 +185,7 @@ final class Administration extends UserManager
      * @throws AuthError
      * @see Role
      */
-    private function addRoleForUserByColumnValue(string $columnName, mixed $columnValue, int $role): bool
+    private function addRoleForUserByColumnValue(string $columnName, $columnValue, int $role): bool
     {
         $role = (int)$role;
 
@@ -211,7 +211,7 @@ final class Administration extends UserManager
      *
      * @see Role
      */
-    private function modifyRolesForUserByColumnValue(string $columnName, mixed $columnValue, callable $modification)
+    private function modifyRolesForUserByColumnValue(string $columnName, $columnValue, callable $modification)
     {
         try {
             $userData = $this->db->selectRow(
@@ -335,7 +335,7 @@ final class Administration extends UserManager
      * @throws AuthError
      * @see Role
      */
-    private function removeRoleForUserByColumnValue(string $columnName, mixed $columnValue, int $role): bool
+    private function removeRoleForUserByColumnValue(string $columnName, $columnValue, int $role): bool
     {
         $role = (int)$role;
 
@@ -493,7 +493,7 @@ final class Administration extends UserManager
      * @throws EmailNotVerifiedException if the user has not verified their email address via a confirmation method yet
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    private function logInAsUserByColumnValue(string $columnName, mixed $columnValue): int
+    private function logInAsUserByColumnValue(string $columnName, $columnValue): int
     {
         try {
             $users = $this->db->select(

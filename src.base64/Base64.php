@@ -36,7 +36,7 @@ final class Base64
      * @return string
      * @throws EncodingError if the input has been invalid
      */
-    public static function encodeUrlSafe(mixed $data): string
+    public static function encodeUrlSafe($data): string
     {
         $encoded = self::encode($data);
 
@@ -54,7 +54,7 @@ final class Base64
      * @return string
      * @throws EncodingError if the input has been invalid
      */
-    public static function encode(mixed $data): string
+    public static function encode($data): string
     {
         $encoded = \base64_encode($data);
 
@@ -72,7 +72,7 @@ final class Base64
      * @return string
      * @throws EncodingError if the input has been invalid
      */
-    public static function encodeUrlSafeWithoutPadding(mixed $data): string
+    public static function encodeUrlSafeWithoutPadding($data): string
     {
         $encoded = self::encode($data);
 
@@ -95,7 +95,7 @@ final class Base64
      * @return mixed
      * @throws DecodingError if the input has been invalid
      */
-    public static function decodeUrlSafeWithoutPadding(string $data): mixed
+    public static function decodeUrlSafeWithoutPadding(string $data)
     {
         return self::decodeUrlSafe($data);
     }
@@ -107,7 +107,7 @@ final class Base64
      * @return mixed
      * @throws DecodingError if the input has been invalid
      */
-    public static function decodeUrlSafe(string $data): mixed
+    public static function decodeUrlSafe(string $data)
     {
         $data = \strtr(
             $data,
@@ -125,7 +125,7 @@ final class Base64
      * @return mixed
      * @throws DecodingError if the input has been invalid
      */
-    public static function decode(string $data): mixed
+    public static function decode(string $data)
     {
         $decoded = \base64_decode($data, true);
 

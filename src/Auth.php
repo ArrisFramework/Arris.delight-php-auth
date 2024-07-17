@@ -1357,7 +1357,7 @@ final class Auth extends UserManager
      * @throws TooManyRequestsException if the number of allowed attempts/requests has been exceeded
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    private function resendConfirmationForColumnValue(string $columnName, mixed $columnValue, callable $callback)
+    private function resendConfirmationForColumnValue(string $columnName, $columnValue, callable $callback)
     {
         try {
             $latestAttempt = $this->db->selectRow(

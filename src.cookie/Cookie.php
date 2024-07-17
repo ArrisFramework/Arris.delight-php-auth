@@ -98,7 +98,7 @@ final class Cookie
      *
      * @return mixed|null the value of the cookie that will be stored on the client's machine
      */
-    public function getValue(): mixed
+    public function getValue()
     {
         return $this->value;
     }
@@ -349,7 +349,7 @@ final class Cookie
      * @param string|null $sameSiteRestriction indicates that the cookie should not be sent along with cross-site requests (either `null`, `None`, `Lax` or `Strict`)
      * @return bool whether the cookie header has successfully been sent (and will *probably* cause the client to set the cookie)
      */
-    public static function setcookie(string $name, mixed $value = null, int $expiryTime = 0, ?string $path = null, ?string $domain = null, bool $secureOnly = false, bool $httpOnly = false, ?string $sameSiteRestriction = null): bool
+    public static function setcookie(string $name, $value = null, int $expiryTime = 0, ?string $path = null, ?string $domain = null, bool $secureOnly = false, bool $httpOnly = false, ?string $sameSiteRestriction = null): bool
     {
         return self::addHttpHeader(
             self::buildCookieHeader($name, $value, $expiryTime, $path, $domain, $secureOnly, $httpOnly, $sameSiteRestriction)
@@ -369,7 +369,7 @@ final class Cookie
      * @param string|null $sameSiteRestriction indicates that the cookie should not be sent along with cross-site requests (either `null`, `None`, `Lax` or `Strict`)
      * @return string the HTTP header
      */
-    public static function buildCookieHeader(string $name, mixed $value = null, int $expiryTime = 0, ?string $path = null, ?string $domain = null, bool $secureOnly = false, bool $httpOnly = false, ?string $sameSiteRestriction = null): ?string
+    public static function buildCookieHeader(string $name, $value = null, int $expiryTime = 0, ?string $path = null, ?string $domain = null, bool $secureOnly = false, bool $httpOnly = false, ?string $sameSiteRestriction = null): ?string
     {
         if (self::isNameValid($name)) {
             $name = (string)$name;
@@ -501,7 +501,7 @@ final class Cookie
      * @param mixed|null $defaultValue the default value to return if the requested cookie cannot be found
      * @return mixed the value from the requested cookie or the default value
      */
-    public static function get(string $name, mixed $defaultValue = null): mixed
+    public static function get(string $name, mixed $defaultValue = null)
     {
         return $_COOKIE[$name] ?? $defaultValue;
     }
