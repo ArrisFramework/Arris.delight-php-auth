@@ -233,7 +233,7 @@ final class Auth extends UserManager
                                 // the cookie and its contents have now been proven to be valid
                                 $valid = true;
 
-                                $this->onLoginSuccessful($rememberData['user'], $rememberData['email'], $rememberData['username'], $rememberData['status'], $rememberData['roles_mask'], $rememberData['force_logout'], true);
+                                $this->onLoginSuccessful($rememberData['user'], $rememberData['email'] ?? '', $rememberData['username'] ?? '', $rememberData['status'], $rememberData['roles_mask'], $rememberData['force_logout'], true);
                             }
                         }
                     }
@@ -274,7 +274,7 @@ final class Auth extends UserManager
             throw new DatabaseError($e->getMessage());
         }
 
-        parent::onLoginSuccessful($userId, $email, $username, $status, $roles, $forceLogout, $remembered);
+        parent::onLoginSuccessful($userId, $email ?? '', $username ?? '', $status, $roles, $forceLogout, $remembered);
     }
 
     /**
@@ -754,7 +754,7 @@ final class Auth extends UserManager
 
             if ((int)$userData['verified'] === 1) {
                 if (!isset($onBeforeSuccess) || (\is_callable($onBeforeSuccess) && $onBeforeSuccess($userData['id']) === true)) {
-                    $this->onLoginSuccessful($userData['id'], $userData['email'], $userData['username'], $userData['status'], $userData['roles_mask'], $userData['force_logout'], false);
+                    $this->onLoginSuccessful($userData['id'], $userData['email'] ?? '', $userData['username'] ?? '', $userData['status'], $userData['roles_mask'], $userData['force_logout'], false);
 
                     // continue to support the old parameter format
                     if ($rememberDuration === true) {
@@ -970,7 +970,7 @@ final class Auth extends UserManager
                     ['id', 'email', 'username', 'status', 'roles_mask', 'force_logout']
                 );
 
-                $this->onLoginSuccessful($userData['id'], $userData['email'], $userData['username'], $userData['status'], $userData['roles_mask'], $userData['force_logout'], true);
+                $this->onLoginSuccessful($userData['id'], $userData['email'] ?? '', $userData['username'] ?? '', $userData['status'], $userData['roles_mask'], $userData['force_logout'], true);
 
                 if ($rememberDuration !== null) {
                     $this->createRememberDirective($userData['id'], $rememberDuration);
@@ -1586,7 +1586,7 @@ final class Auth extends UserManager
                 ['username', 'status', 'roles_mask', 'force_logout']
             );
 
-            $this->onLoginSuccessful($idAndEmail['id'], $idAndEmail['email'], $userData['username'], $userData['status'], $userData['roles_mask'], $userData['force_logout'], true);
+            $this->onLoginSuccessful($idAndEmail['id'], $idAndEmail['email'] ?? '', $userData['username'] ?? '', $userData['status'], $userData['roles_mask'], $userData['force_logout'], true);
 
             if ($rememberDuration !== null) {
                 $this->createRememberDirective($idAndEmail['id'], $rememberDuration);
