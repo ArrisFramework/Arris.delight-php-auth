@@ -424,7 +424,7 @@ abstract class UserManager
      * @throws AmbiguousUsernameException if multiple users with the specified username have been found
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function getUserDataByUsername(string $username, array $requestedColumns): array
+    public function getUserDataByUsername(string $username, array $requestedColumns): array
     {
         try {
             $projection = \implode(', ', $requestedColumns);
@@ -470,7 +470,7 @@ abstract class UserManager
      * @param string|null $selector (optional) the selector which the deletion should be restricted to
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function deleteRememberDirectiveForUserById(int $userId, ?string $selector = null)
+    public function deleteRememberDirectiveForUserById(int $userId, ?string $selector = null)
     {
         $whereMappings = [];
 

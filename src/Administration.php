@@ -629,7 +629,7 @@ final class Administration extends UserManager
      * @throws DatabaseError
      * @throws UnknownIdException
      */
-    protected function getUserData(int $id, array $requestedColumns = []): array
+    public function getUserData(int $id, array $requestedColumns = []): array
     {
         try {
             $projection = empty($requestedColumns) ? '*' : \implode(', ', $requestedColumns);
