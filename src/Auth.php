@@ -2026,4 +2026,9 @@ final class Auth extends UserManager
         return new Administration($this->db, $this->dbTablePrefix, $this->dbSchema);
     }
 
+    public function config(): Config
+    {
+        return new Config($this->db, $this->dbTablePrefix, $this->dbSchema);
+    }
+
 }
