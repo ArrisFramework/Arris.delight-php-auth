@@ -604,4 +604,50 @@ final class Administration extends UserManager
         $this->forceLogoutForUserById($userId);
     }
 
+    /**
+     * Проверяет существование пользователя с указанным ID
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function isUserExists(int $id):bool
+    {
+        return (bool)$this->db->selectValue(
+            "SELECT id FROM " . implode('', $this->makeTableNameComponents('users')) . " WHERE id = ?",
+            [ $id ]
+        );
+    }
+
+    /**
+     * Returns the requested user data for the account with the specified id
+     *
+     * You must never pass untrusted input to the parameter that takes the column list
+     *
+     * @param int $id
+     * @param array $requestedColumns the columns to request from the user's record
+     * @return array the user data (if an account was found unambiguously)
+     * @throws DatabaseError
+     * @throws UnknownIdException
+     */
+    protected function getUserData(int $id, array $requestedColumns = []): array
+    {
+        try {
+            $projection = empty($requestedColumns) ? '*' : \implode(', ', $requestedColumns);
+
+
+            $user = $this->db->select(
+                'SELECT ' . $projection . ' FROM ' . $this->makeTableName('users') . ' WHERE id = ? LIMIT 2 OFFSET 0',
+                [$id]
+            );
+        } catch (Error $e) {
+            throw new DatabaseError($e->getMessage());
+        }
+
+        if (empty($user)) {
+            throw new UnknownIdException();
+        } else {
+            return $user;
+        }
+    }
+
 }
