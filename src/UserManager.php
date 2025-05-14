@@ -395,7 +395,7 @@ abstract class UserManager
      * @param int $forceLogout the counter that keeps track of forced logouts that need to be performed in the current session
      * @param bool $remembered whether the user has been remembered (instead of them having authenticated actively)
      */
-    protected function onLoginSuccessful(int $userId, string $email, string $username, int $status, int $roles, int $forceLogout, bool $remembered): void
+    public function onLoginSuccessful(int $userId, string $email, string $username, int $status, int $roles, int $forceLogout, bool $remembered): void
     {
         // re-generate the session ID to prevent session fixation attacks (requests a cookie to be written on the client)
         Session::regenerate(true);
@@ -454,7 +454,7 @@ abstract class UserManager
      * @param int $userId the ID of the user to sign out
      * @throws AuthError if an internal problem occurred (do *not* catch)
      */
-    protected function forceLogoutForUserById(int $userId): void
+    public function forceLogoutForUserById(int $userId): void
     {
         $this->deleteRememberDirectiveForUserById($userId);
         $this->db->exec(

@@ -261,7 +261,7 @@ final class Auth extends UserManager
      * @throws DatabaseError
      * @throws IntegrityConstraintViolationException
      */
-    protected function onLoginSuccessful(int $userId, string $email, string $username, int $status, int $roles, int $forceLogout, bool $remembered): void
+    public function onLoginSuccessful(int $userId, string $email, string $username, int $status, int $roles, int $forceLogout, bool $remembered): void
     {
         // update the timestamp of the user's last login
         try {
@@ -441,7 +441,7 @@ final class Auth extends UserManager
         }
     }
 
-    protected function deleteRememberDirectiveForUserById(int $userId, ?string $selector = null)
+    public function deleteRememberDirectiveForUserById(int $userId, ?string $selector = null)
     {
         parent::deleteRememberDirectiveForUserById($userId, $selector);
 
